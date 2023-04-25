@@ -1,0 +1,37 @@
+trigger:
+- main
+pr:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  template: azure-variables.yml
+
+steps:
+- task: HelmInstaller@1
+  inputs:
+    helmVersionToInstall: 'latest'
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: $(azure_subscription)
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az aks get-credentials --resource-group $(cluster_resource_group) --name $(cluster_name)
+
+- task: HelmDeploy@0
+  inputs:
+    connectionType: 'Kubernetes Service Connection'
+    kubernetesServiceEndpoint: $(kubernetes_service_connection)
+    namespace: $(kubernetes_namespace)
+    command: 'upgrade'
+    chartType: 'FilePath'
+    chartPath: $(chart_path)
+    releaseName: $(release_name)
+    arguments: '--install --wait'
+    azureContainerRegistry: $(azure_container_registry)
+    azureSubscriptionForACR: $(azure_acr_subscription)
+    azureResourceGroupForACR: $(azure_acr_resource_group)

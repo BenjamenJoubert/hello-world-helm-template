@@ -1,0 +1,11 @@
+variables:
+  azure_subscription: "my-subscription"
+  cluster_resource_group: "my-resource-group"
+  cluster_name: "my-cluster"
+  kubernetes_service_connection: "my-kubernetes-service-connection"
+  kubernetes_namespace: "my-namespace"
+  release_name: "my-release"
+  chart_path: "hello-world-template/Chart.yaml"
+  azure_container_registry: "my-container-registry"
+  azure_acr_subscription: "my-acr-subscription"
+  azure_acr_resource_group: "my-acr-resource-group"
