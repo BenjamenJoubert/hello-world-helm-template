@@ -7,7 +7,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  template: azure-variables.yml
+  template: helm-variables.yml
 
 steps:
 - task: HelmInstaller@1
